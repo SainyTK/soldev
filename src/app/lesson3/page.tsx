@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import Lesson2 from "@/views/Lesson2";
+import Lesson3 from "@/views/Lesson3";
 
-export default function Lesson2Page() {
-  return <Lesson2 />;
+export default function Lesson3Page() {
+  return <Lesson3 />;
 }

@@ -1,4 +1,7 @@
 import "./globals.css";
+import "@solana/wallet-adapter-ant-design/styles.css";
+import "@solana/wallet-adapter-react-ui/styles.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -19,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AntdRegistry>
-          {children}
-        </AntdRegistry>
+        <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
   );

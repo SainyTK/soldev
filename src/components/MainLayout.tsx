@@ -1,6 +1,9 @@
 import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import type { MenuProps } from "antd";
+import dynamic from "next/dynamic";
+
+const Connect = dynamic(() => import("../containers/Connect").then(module => module.Connect), { ssr: false })
 
 const { Header, Content, Sider } = Layout;
 
@@ -31,14 +34,20 @@ const MainLayout: React.FC<Props> = ({
 
   return (
     <Layout>
-      <Header style={{ display: "flex", alignItems: "center" }}>
-        <div className="demo-logo" />
+      <Header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Menu
           theme="dark"
           defaultSelectedKeys={[activeMenu]}
           items={menus}
-          onSelect={e => onChangeMenu && onChangeMenu(e.key)}
+          onSelect={(e) => onChangeMenu && onChangeMenu(e.key)}
         />
+        <Connect />
       </Header>
       <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
@@ -47,7 +56,7 @@ const MainLayout: React.FC<Props> = ({
             defaultSelectedKeys={[activeSubMenu]}
             style={{ height: "100%", borderRight: 0 }}
             items={submenus}
-            onSelect={(e) => onChangeSubMenu &&  onChangeSubMenu(e.key)}
+            onSelect={(e) => onChangeSubMenu && onChangeSubMenu(e.key)}
           />
         </Sider>
         <Layout style={{ padding: "24px 24px" }}>
