@@ -21,6 +21,10 @@ const SUBMENUS: MenuProps["items"] = [
   {
     key: "lesson2",
     label: "Lesson 2 - Write Data",
+  },
+  {
+    key: "lesson3",
+    label: "Lesson 3 - Wallet",
   }
 ];
 
