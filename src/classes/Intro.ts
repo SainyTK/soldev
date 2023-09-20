@@ -27,7 +27,7 @@ export class Intro {
     return buffer.slice(0, this.borshInstructionSchema.getSpan(buffer));
   }
 
-  static deserialize(buffer: Buffer): Intro | null {
+  static deserialize(buffer?: Buffer): Intro | null {
     if (!buffer) {
       return null;
     }

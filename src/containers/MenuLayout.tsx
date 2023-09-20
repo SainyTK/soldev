@@ -33,6 +33,10 @@ const SUBMENUS: MenuProps["items"] = [
   {
     key: "lesson5",
     label: "Lesson 5 - Deserialize Custom Data",
+  },
+  {
+    key: "lesson6",
+    label: "Lesson 6 - Page, Order, and Filter Custom Account Data",
   }
 ];
 
