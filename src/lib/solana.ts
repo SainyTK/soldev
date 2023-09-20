@@ -170,7 +170,11 @@ export const getMovieReviewTransaction = async (
   return transaction;
 };
 
-export const getIntroTransaction = async (senderAddress: string, name: string, message: string) => {
+export const getIntroTransaction = async (
+  senderAddress: string,
+  name: string,
+  message: string
+) => {
   const courseProgramId = "HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf";
 
   const intro = new Intro({ name, message });
@@ -186,24 +190,52 @@ export const getIntroTransaction = async (senderAddress: string, name: string, m
       {
         pubkey: new PublicKey(senderAddress),
         isSigner: true,
-        isWritable: false
+        isWritable: false,
       },
       {
         pubkey: pda,
         isSigner: false,
-        isWritable: true
+        isWritable: true,
       },
       {
         pubkey: SystemProgram.programId,
         isSigner: false,
-        isWritable: false
-      }
+        isWritable: false,
+      },
     ],
     programId: new PublicKey(courseProgramId),
-    data: buffer
+    data: buffer,
   });
 
   const transaction = new Transaction();
   transaction.add(instruction);
   return transaction;
-}
+};
+
+export const fetchMovieReviews = (
+  connection = new Connection(solanaEndpoint)
+) => {
+  const movieProgramId = "CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN";
+
+  return connection.getProgramAccounts(new PublicKey(movieProgramId)).then(
+    (accounts) =>
+      accounts
+        .map((acc) => {
+          return Movie.deserialize(acc.account.data);
+        })
+        .filter((x) => x !== null) as Movie[]
+  );
+};
+
+export const fetchIntros = (connection = new Connection(solanaEndpoint)) => {
+  const courseProgramId = "HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf";
+
+  return connection.getProgramAccounts(new PublicKey(courseProgramId)).then(
+    (accounts) =>
+      accounts
+        .map((acc) => {
+          return Intro.deserialize(acc.account.data);
+        })
+        .filter((x) => x !== null) as Intro[]
+  );
+};
