@@ -25,6 +25,10 @@ const SUBMENUS: MenuProps["items"] = [
   {
     key: "lesson3",
     label: "Lesson 3 - Wallet",
+  },
+  {
+    key: "lesson4",
+    label: "Lesson 4 - Serialize Custom Instruction Data",
   }
 ];
 

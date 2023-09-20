@@ -10,6 +10,8 @@ import {
   TransactionInstruction,
 } from "@solana/web3.js";
 import * as bs58 from "bs58";
+import { Movie } from "@/classes/Movie";
+import { Intro } from "@/classes/Intro";
 
 export const solanaEndpoint = clusterApiUrl("devnet");
 
@@ -123,3 +125,85 @@ export const getIncrementTransaction = () => {
   transaction.add(instruction);
   return transaction;
 };
+
+export const getMovieReviewTransaction = async (
+  senderAddress: string,
+  title: string,
+  rating: number,
+  description: string
+) => {
+  const movieProgramId = "CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN";
+
+  const movie = new Movie({ title, rating, description });
+  const buffer = movie.serialize();
+
+  const [pda] = await PublicKey.findProgramAddress(
+    [new PublicKey(senderAddress).toBuffer(), Buffer.from(movie.title)],
+    new PublicKey(movieProgramId)
+  );
+
+  const instruction = new TransactionInstruction({
+    keys: [
+      {
+        pubkey: new PublicKey(senderAddress),
+        isSigner: true,
+        isWritable: false,
+      },
+      {
+        pubkey: pda,
+        isSigner: false,
+        isWritable: true,
+      },
+      {
+        pubkey: SystemProgram.programId,
+        isSigner: false,
+        isWritable: false,
+      },
+    ],
+    data: buffer,
+    programId: new PublicKey(movieProgramId),
+  });
+
+  const transaction = new Transaction();
+  transaction.add(instruction);
+
+  return transaction;
+};
+
+export const getIntroTransaction = async (senderAddress: string, name: string, message: string) => {
+  const courseProgramId = "HdE95RSVsdb315jfJtaykXhXY478h53X6okDupVfY9yf";
+
+  const intro = new Intro({ name, message });
+  const buffer = intro.serialize();
+
+  const [pda] = await PublicKey.findProgramAddress(
+    [new PublicKey(senderAddress).toBuffer()],
+    new PublicKey(courseProgramId)
+  );
+
+  const instruction = new TransactionInstruction({
+    keys: [
+      {
+        pubkey: new PublicKey(senderAddress),
+        isSigner: true,
+        isWritable: false
+      },
+      {
+        pubkey: pda,
+        isSigner: false,
+        isWritable: true
+      },
+      {
+        pubkey: SystemProgram.programId,
+        isSigner: false,
+        isWritable: false
+      }
+    ],
+    programId: new PublicKey(courseProgramId),
+    data: buffer
+  });
+
+  const transaction = new Transaction();
+  transaction.add(instruction);
+  return transaction;
+}
