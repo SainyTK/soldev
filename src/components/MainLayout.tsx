@@ -56,7 +56,9 @@ const MainLayout: React.FC<Props> = ({
             defaultSelectedKeys={[activeSubMenu]}
             style={{ height: "100%", borderRight: 0 }}
             items={submenus}
-            onSelect={(e) => onChangeSubMenu && onChangeSubMenu(e.key)}
+            onSelect={(e) => {
+              onChangeSubMenu && onChangeSubMenu(e.key);
+            }}
           />
         </Sider>
         <Layout style={{ padding: "24px 24px" }}>

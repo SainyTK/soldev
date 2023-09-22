@@ -12,6 +12,17 @@ import {
 import * as bs58 from "bs58";
 import { Movie } from "@/classes/Movie";
 import { Intro } from "@/classes/Intro";
+import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  MINT_SIZE,
+  TOKEN_PROGRAM_ID,
+  createAssociatedTokenAccountInstruction,
+  createInitializeMintInstruction,
+  createMintToInstruction,
+  getAssociatedTokenAddress,
+  getMinimumBalanceForRentExemptMint,
+  getMint,
+} from "@solana/spl-token";
 
 export const solanaEndpoint = clusterApiUrl("devnet");
 
@@ -239,3 +250,76 @@ export const fetchIntros = (connection = new Connection(solanaEndpoint)) => {
         .filter((x) => x !== null) as Intro[]
   );
 };
+
+export const fetchMintInfo = async (connection: Connection, mint: string) => {
+  return getMint(connection, new PublicKey(mint));
+}
+
+export const getCreateMintTransaction = async (
+  connection: Connection,
+  payer: string,
+  mintAuthority: string,
+  decimals: number
+) => {
+  const lamports = await getMinimumBalanceForRentExemptMint(connection);
+  const programId = TOKEN_PROGRAM_ID;
+
+  const transaction = new Transaction();
+
+  transaction.add(
+    SystemProgram.createAccount({
+      fromPubkey: new PublicKey(payer),
+      newAccountPubkey: new PublicKey(mintAuthority),
+      space: MINT_SIZE,
+      lamports,
+      programId,
+    }),
+    createInitializeMintInstruction(
+      new PublicKey(mintAuthority),
+      decimals,
+      new PublicKey(payer),
+      new PublicKey(payer),
+      programId
+    )
+  );
+
+  return transaction;
+};
+
+export const getCreateAtaTransaction = async (payer: string, owner: string, mint: string) => {
+  const ownerPk = new PublicKey(owner);
+  const payerPk = new PublicKey(payer);
+  const mintPk = new PublicKey(mint);
+
+  const ata = await getAssociatedTokenAddress(
+    mintPk,
+    ownerPk,
+    false,
+    TOKEN_PROGRAM_ID,
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  );
+
+  const transaction = new Transaction();
+
+  transaction.add(
+    createAssociatedTokenAccountInstruction(
+      payerPk,
+      ata,
+      ownerPk,
+      mintPk,
+      TOKEN_PROGRAM_ID,
+      ASSOCIATED_TOKEN_PROGRAM_ID
+    )
+  );
+
+  return transaction;
+};
+
+export const getMintTokenTransaction = async (mint: string, ata: string, authority: string, amount: number) => {
+  const mintPk = new PublicKey(mint);
+  const ataPk = new PublicKey(ata);
+  const authorityPk = new PublicKey(authority);
+  const transaction = new Transaction();
+  transaction.add(createMintToInstruction(mintPk, ataPk, authorityPk, amount))
+  return transaction;
+}
