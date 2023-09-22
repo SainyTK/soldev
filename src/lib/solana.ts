@@ -19,6 +19,7 @@ import {
   createAssociatedTokenAccountInstruction,
   createInitializeMintInstruction,
   createMintToInstruction,
+  createTransferInstruction,
   getAssociatedTokenAddress,
   getMinimumBalanceForRentExemptMint,
   getMint,
@@ -315,11 +316,45 @@ export const getCreateAtaTransaction = async (payer: string, owner: string, mint
   return transaction;
 };
 
-export const getMintTokenTransaction = async (mint: string, ata: string, authority: string, amount: number) => {
+export const getMintTokenTransaction = async (mint: string, recipient: string, authority: string, amount: number) => {
   const mintPk = new PublicKey(mint);
-  const ataPk = new PublicKey(ata);
   const authorityPk = new PublicKey(authority);
+
+  const ataPk = await getAssociatedTokenAddress(
+    mintPk,
+    new PublicKey(recipient),
+    false,
+    TOKEN_PROGRAM_ID,
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  );
+
   const transaction = new Transaction();
   transaction.add(createMintToInstruction(mintPk, ataPk, authorityPk, amount))
+  return transaction;
+}
+
+export const getTransferTokenTransaction = async (mint: string, from: string, to: string, owner: string, amount: number) => {
+  const mintPk = new PublicKey(mint);
+  const ownerPk = new PublicKey(owner);
+  
+  const fromAta  = await getAssociatedTokenAddress(
+    mintPk,
+    new PublicKey(from),
+    false,
+    TOKEN_PROGRAM_ID,
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  )
+
+  const toAta = await getAssociatedTokenAddress(
+    mintPk,
+    new PublicKey(to),
+    false,
+    TOKEN_PROGRAM_ID,
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  )
+
+  const transaction = new Transaction();
+
+  transaction.add(createTransferInstruction(fromAta, toAta, ownerPk, amount))
   return transaction;
 }

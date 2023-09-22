@@ -1,39 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Col, Row, Typography, Form, Button, Input } from "antd";
 import {
-  Col,
-  Row,
-  Typography,
-  Form,
-  Button,
-  Input,
-  Rate,
-  Card,
-  Pagination,
-} from "antd";
-import {
-  getAccountInfo,
   getTxURL,
-  lamportsToSOL,
-  getMovieReviewTransaction,
-  getIntroTransaction,
   getCreateMintTransaction,
   generateKeypair,
   getCreateAtaTransaction,
   fetchMintInfo,
   getMintTokenTransaction,
+  getTransferTokenTransaction,
 } from "@/lib/solana";
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { Movie } from "@/classes/Movie";
-import { Intro } from "@/classes/Intro";
-import { MovieCoordinator } from "@/classes/MovieCoordiantor";
-import { Connection, PublicKey } from "@solana/web3.js";
-import { IntroCoordinator } from "@/classes/IntroCoordinator";
+import { PublicKey } from "@solana/web3.js";
 import { useSOLBalance } from "@/hooks/useSOLBalance";
-import { generateKeyPair } from "crypto";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
@@ -48,18 +30,18 @@ const Module2Lesson1 = () => {
 
   const [creatingMint, setCreatingMint] = useState(false);
   const [createdMint, setCreatedMint] = useState("");
-  const [mintAuthority, setMintAuthority] = useState("");
-  const [freezeAuthority, setFreezeAuthority] = useState("");
-  const [decimals, setDecimals] = useState(0);
 
   const [creatingAta, setCreatingAta] = useState(false);
   const [ata, setAta] = useState("");
 
   const [minting, setMinting] = useState(false);
 
+  const [transferring, setTransferring] = useState(false);
+
   const [signature1, setSignature1] = useState("");
   const [signature2, setSignature2] = useState("");
   const [signature3, setSignature3] = useState("");
+  const [signature4, setSignature4] = useState("");
 
   const handleCreateMint = async () => {
     if (publicKey) {
@@ -154,6 +136,34 @@ const Module2Lesson1 = () => {
     setMinting(false);
   };
 
+  const handleTransferToken = async (values: any) => {
+    setTransferring(true);
+
+    try {
+      const { mint, recipient, amount } = values;
+
+      const mintInfo = await fetchMintInfo(connection, mint);
+      const mintAmount = +amount * 10 ** mintInfo.decimals;
+
+      const from = publicKey?.toBase58() || "";
+      const owner = from;
+      const transaction = await getTransferTokenTransaction(
+        mint,
+        from,
+        recipient,
+        owner,
+        mintAmount
+      );
+      const signature = await sendTransaction(transaction, connection);
+
+      setSignature4(signature);
+    } catch (e) {
+      console.error(e);
+    }
+
+    setTransferring(false);
+  };
+
   return (
     <>
       <Row justify={"center"} gutter={[8, 8]}>
@@ -192,25 +202,6 @@ const Module2Lesson1 = () => {
                 <Typography.Text copyable={{ text: createdMint }}>
                   Mint address: {createdMint}
                 </Typography.Text>
-              </Col>
-            )}
-            {mintAuthority && (
-              <Col span={24}>
-                <Typography.Text copyable={{ text: mintAuthority }}>
-                  Mint authority: {mintAuthority}
-                </Typography.Text>
-              </Col>
-            )}
-            {freezeAuthority && (
-              <Col span={24}>
-                <Typography.Text copyable={{ text: freezeAuthority }}>
-                  Freeze authority: {freezeAuthority}
-                </Typography.Text>
-              </Col>
-            )}
-            {decimals && (
-              <Col span={24}>
-                <Typography.Text>Decimals: {decimals}</Typography.Text>
               </Col>
             )}
             {signature1 && (
@@ -281,6 +272,35 @@ const Module2Lesson1 = () => {
               <Col span={24}>
                 <a href={getTxURL(signature3)} target="_blank">
                   {getTxURL(signature3)}
+                </a>
+              </Col>
+            )}
+
+            <Col span={24}>
+              <Typography.Title level={4}>Transfer Token</Typography.Title>
+            </Col>
+            <Col span={24}>
+              <Form onFinish={handleTransferToken}>
+                <Form.Item name="mint" label="Mint">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="recipient" label="Recipient">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="amount" label="Amount">
+                  <Input />
+                </Form.Item>
+                <Form.Item>
+                  <Button htmlType="submit" loading={transferring}>
+                    Transfer
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Col>
+            {signature4 && (
+              <Col span={24}>
+                <a href={getTxURL(signature4)} target="_blank">
+                  {getTxURL(signature4)}
                 </a>
               </Col>
             )}
