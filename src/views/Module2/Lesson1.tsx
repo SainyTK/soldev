@@ -2,15 +2,7 @@
 
 import React, { useState } from "react";
 import { Col, Row, Typography, Form, Button, Input } from "antd";
-import {
-  getTxURL,
-  getCreateMintTransaction,
-  generateKeypair,
-  getCreateAtaTransaction,
-  fetchMintInfo,
-  getMintTokenTransaction,
-  getTransferTokenTransaction,
-} from "@/lib/solana";
+import { generateKeypair, getTxURL } from "@/lib/solana";
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -21,6 +13,13 @@ import {
   TOKEN_PROGRAM_ID,
   getAssociatedTokenAddress,
 } from "@solana/spl-token";
+import {
+  getCreateMintTransaction,
+  getCreateAtaTransaction,
+  fetchMintInfo,
+  getMintTokenTransaction,
+  getTransferTokenTransaction,
+} from "@/lib/splToken";
 
 const Module2Lesson1 = () => {
   const { connection } = useConnection();

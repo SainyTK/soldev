@@ -11,7 +11,9 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.17.0",
     "@project-serum/borsh": "^0.2.5",
+    "@solana/buffer-layout-utils": "^0.2.0",
     "@solana/spl-token": "^0.3.8",
+    "@solana/spl-token-swap": "^0.4.0",
     "@solana/wallet-adapter-ant-design": "^0.11.31",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-phantom": "^0.9.24",
@@ -27,7 +29,7 @@
     "buffer-layout": "^1.2.2",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
+    "next": "^13.5.2",
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -12,13 +12,7 @@ import {
   Card,
   Pagination,
 } from "antd";
-import {
-  getAccountInfo,
-  getTxURL,
-  lamportsToSOL,
-  getMovieReviewTransaction,
-  getIntroTransaction,
-} from "@/lib/solana";
+import { getAccountInfo, getTxURL, lamportsToSOL } from "@/lib/solana";
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -27,6 +21,8 @@ import { Intro } from "@/classes/Intro";
 import { MovieCoordinator } from "@/classes/MovieCoordiantor";
 import { Connection } from "@solana/web3.js";
 import { IntroCoordinator } from "@/classes/IntroCoordinator";
+import { getMovieReviewTransaction } from "@/lib/splMovieReview";
+import { getIntroTransaction } from "@/lib/splIntro";
 
 const Lesson6 = () => {
   const { connection } = useConnection();

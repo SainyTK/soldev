@@ -1,20 +1,17 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Col, Row, Typography, Form, Button, Divider, Input, Rate } from "antd";
+import { Col, Row, Typography, Form, Button, Input, Rate } from "antd";
 import {
-  solToLamports,
   getAccountInfo,
-  getIncrementTransaction,
-  getTransferTransaction,
   getTxURL,
   lamportsToSOL,
-  getMovieReviewTransaction,
-  getIntroTransaction,
 } from "@/lib/solana";
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { getMovieReviewTransaction } from "@/lib/splMovieReview";
+import { getIntroTransaction } from "@/lib/splIntro";
 
 const Lesson4 = () => {
   const { connection } = useConnection();

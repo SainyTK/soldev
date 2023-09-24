@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Col, Row, Typography, Form, Button, Divider, Input } from "antd";
+import { Col, Row, Typography, Form, Button, Input } from "antd";
 import {
-  solToLamports,
   getAccountInfo,
-  getIncrementTransaction,
   getTransferTransaction,
   getTxURL,
   lamportsToSOL,
@@ -13,6 +11,7 @@ import {
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { getIncrementTransaction } from "@/lib/splCounter";
 
 const Lesson3 = () => {
   const { connection } = useConnection();

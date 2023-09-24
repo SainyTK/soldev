@@ -7,28 +7,22 @@ import {
   Typography,
   Form,
   Button,
-  Divider,
   Input,
   Rate,
   Card,
 } from "antd";
 import {
-  solToLamports,
   getAccountInfo,
-  getIncrementTransaction,
-  getTransferTransaction,
   getTxURL,
   lamportsToSOL,
-  getMovieReviewTransaction,
-  getIntroTransaction,
-  fetchMovieReviews,
-  fetchIntros,
 } from "@/lib/solana";
 
 import { truncateString } from "@/utils/format";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Movie } from "@/classes/Movie";
 import { Intro } from "@/classes/Intro";
+import { fetchMovieReviews, getMovieReviewTransaction } from "@/lib/splMovieReview";
+import { fetchIntros, getIntroTransaction } from "@/lib/splIntro";
 
 const Lesson5 = () => {
   const { connection } = useConnection();

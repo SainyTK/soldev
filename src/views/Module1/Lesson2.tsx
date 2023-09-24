@@ -6,11 +6,11 @@ import {
   airdropSOL,
   generateKeypair,
   getTxURL,
-  incrementCounter,
 } from "@/lib/solana";
 import * as bs58 from "bs58";
 
 import { truncateString } from "@/utils/format";
+import { incrementCounter } from "@/lib/splCounter";
 
 const Lesson2 = () => {
   const [loading, setLoading] = React.useState(false);
