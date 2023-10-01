@@ -25,6 +25,11 @@ export const getTxURL = (signature: string) => {
   return `${baseURL}/${signature}?cluster=devnet`;
 };
 
+export const getMintURL = (signature: string) => {
+  const baseURL = `https://solscan.io/token`;
+  return `${baseURL}/${signature}?cluster=devnet`;
+};
+
 export const generateKeypair = () => {
   return Keypair.generate();
 };

@@ -249,7 +249,7 @@ const Module2Lesson2 = () => {
                       <Input />
                     </Form.Item>
                     <Form.Item>
-                      <Button htmlType="submit">Airdrop Krypt</Button>
+                      <Button htmlType="submit" loading={airdropping1}>Airdrop Krypt</Button>
                     </Form.Item>
                   </Form>
                 </Col>
@@ -270,7 +270,7 @@ const Module2Lesson2 = () => {
                       <Input />
                     </Form.Item>
                     <Form.Item>
-                      <Button htmlType="submit">Airdrop Scroorage</Button>
+                      <Button htmlType="submit" loading={airdropping2}>Airdrop Scroorage</Button>
                     </Form.Item>
                   </Form>
                 </Col>
