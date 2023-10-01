@@ -61,6 +61,28 @@ const SUBMENUS: MenuProps["items"] = [
         label: 'Lesson 3 - Create Solana NFTs with Metaplex'
       }
     ]
+  },
+  {
+    key: '/module3',
+    label: 'Module 3 - Basic Solana Program Development',
+    children: [
+      {
+        key: '/module3/lesson1',
+        label: 'Lesson 1 - Hello World'
+      },
+      {
+        key: '/module3/lesson2',
+        label: 'Lesson 2 - Create a Basic Program, Part 1 - Handle Instruction Data'
+      },
+      {
+        key: '/module3/lesson3',
+        label: 'Lesson 3 - Create a Basic Program, Part 2 - State Management'
+      },
+      {
+        key: '/module3/lesson4',
+        label: 'Lesson 4 - Create a Basic Program, Part 3 - Basic Security and Validation'
+      }
+    ]
   }
 ];
 
