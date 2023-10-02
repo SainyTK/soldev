@@ -83,6 +83,28 @@ const SUBMENUS: MenuProps["items"] = [
         label: 'Lesson 4 - Create a Basic Program, Part 3 - Basic Security and Validation'
       }
     ]
+  },
+  {
+    key: '/module4',
+    label: 'Module 4 - Local Solana Program Development',
+    children: [
+      {
+        key: '/module4/lesson1',
+        label: 'Lesson 1 - Local Program Development'
+      },
+      {
+        key: '/module4/lesson2',
+        label: 'Lesson 2 - Create a Basic Program, Part 1 - Handle Instruction Data'
+      },
+      {
+        key: '/module4/lesson3',
+        label: 'Lesson 3 - Create a Basic Program, Part 2 - State Management'
+      },
+      {
+        key: '/module3/lesson4',
+        label: 'Lesson 4 - Create a Basic Program, Part 3 - Basic Security and Validation'
+      }
+    ]
   }
 ];
 
