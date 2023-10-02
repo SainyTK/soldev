@@ -25,9 +25,9 @@ export class Movie {
     this.description = fields.description;
   }
 
-  serialize(): Buffer {
+  serialize(variant = 0): Buffer {
     const buffer = Buffer.alloc(1000);
-    this.borshInstructionSchema.encode({ ...this, variant: 0 }, buffer);
+    this.borshInstructionSchema.encode({ ...this, variant }, buffer);
     return buffer.slice(0, this.borshInstructionSchema.getSpan(buffer));
   }
 
