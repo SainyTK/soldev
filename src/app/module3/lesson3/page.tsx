@@ -1,10 +1,10 @@
-import Module2Lesson3 from '@/views/Module2/Lesson3'
+import Module3Lesson3 from '@/views/Module3/Lesson3'
 import React from 'react'
 
-const Module2Lesson3Page = () => {
+const Module3Lesson3Page = () => {
   return (
-    <Module2Lesson3 />
+    <Module3Lesson3 />
   )
 }
 
-export default Module2Lesson3Page
+export default Module3Lesson3Page

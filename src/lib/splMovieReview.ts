@@ -8,13 +8,16 @@ import {
 } from "@solana/web3.js";
 import { solanaEndpoint } from "./solana";
 
+export const DEFAULT_MOVIE_PROGRAM_ID = "CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN"; 
+export const MY_MOVIE_PROGRAM_ID = "4jvF1FLvcKb2aJjNqJvnEX88XNWSnNw6Ay18gN9BYhGd";
+
 export const getMovieReviewTransaction = async (
   senderAddress: string,
   title: string,
   rating: number,
-  description: string
+  description: string,
+  movieProgramId = DEFAULT_MOVIE_PROGRAM_ID
 ) => {
-  const movieProgramId = "CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN";
 
   const movie = new Movie({ title, rating, description });
   const buffer = movie.serialize();
@@ -53,10 +56,9 @@ export const getMovieReviewTransaction = async (
 };
 
 export const fetchMovieReviews = (
-  connection = new Connection(solanaEndpoint)
+  connection = new Connection(solanaEndpoint),
+  movieProgramId = DEFAULT_MOVIE_PROGRAM_ID
 ) => {
-  const movieProgramId = "CenYq6bDRB7p73EjsPEpiYN7uveyPUTdXkDkgUduboaN";
-
   return connection.getProgramAccounts(new PublicKey(movieProgramId)).then(
     (accounts) =>
       accounts
