@@ -101,6 +101,24 @@ const SUBMENUS: MenuProps["items"] = [
         label: 'Lesson 3 - CPI (Cross Program Invocation)'
       }
     ]
+  },
+  {
+    key: '/module5',
+    label: 'Module 5 - Anchor Solana Program Development',
+    children: [
+      {
+        key: '/module5/lesson1',
+        label: 'Lesson 1 - Intro to Anchor'
+      },
+      {
+        key: '/module5/lesson2',
+        label: 'Lesson 2 - PDA (Program Derived Address)'
+      },
+      {
+        key: '/module5/lesson3',
+        label: 'Lesson 3 - CPI (Cross Program Invocation)'
+      }
+    ]
   }
 ];
 

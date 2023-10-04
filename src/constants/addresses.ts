@@ -51,3 +51,7 @@ export const TOKEN_SWAP_PROGRAM_ID = new Web3.PublicKey(
 export const ASSOCIATED_TOKEN_PROGRAM_ID = new Web3.PublicKey(
     "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
 )
+
+export const COUNTER_PROGRAM_ID = new Web3.PublicKey(
+    "CadfD5GKNXb7BX5HRroVK7g848FWN1Aha3Dp6nQWF2PK"
+)
