@@ -94,15 +94,11 @@ const SUBMENUS: MenuProps["items"] = [
       },
       {
         key: '/module4/lesson2',
-        label: 'Lesson 2 - Create a Basic Program, Part 1 - Handle Instruction Data'
+        label: 'Lesson 2 - PDA (Program Derived Address)'
       },
       {
         key: '/module4/lesson3',
-        label: 'Lesson 3 - Create a Basic Program, Part 2 - State Management'
-      },
-      {
-        key: '/module3/lesson4',
-        label: 'Lesson 4 - Create a Basic Program, Part 3 - Basic Security and Validation'
+        label: 'Lesson 3 - CPI (Cross Program Invocation)'
       }
     ]
   }
